@@ -1,58 +1,66 @@
 #include <stdio.h>
+#include <math.h>
 
-// Введення масиву
-void inputArray(int arr[], int n, char name) {
-    for (int i = 0; i < n; i++) {
-        printf("Введіть %c[%d]: ", name, i + 1);
-        scanf("%d", &arr[i]);
+// Структура для точки
+typedef struct {
+    double x, y;
+} Point;
+
+// Ввід координат трикутника
+void inputTriangle(Point t[3], int number) {
+    printf("Введіть координати трикутника %d (x y):\n", number);
+    for (int i = 0; i < 3; i++) {
+        printf("Вершина %d: ", i + 1);
+        scanf("%lf %lf", &t[i].x, &t[i].y);
     }
 }
 
-// Виведення масиву
-void printArray(int arr[], int n, char name) {
-    printf("Масив %c: ", name);
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+// Вивід трикутника
+void printTriangle(Point t[3], int number) {
+    printf("Трикутник %d: ", number);
+    for (int i = 0; i < 3; i++) {
+        printf("(%.2lf, %.2lf) ", t[i].x, t[i].y);
     }
     printf("\n");
 }
 
-// Підрахунок від’ємних чисел
-int countNegative(int arr[], int n) {
-    int count = 0;
-    for (int i = 0; i < n; i++) {
-        if (arr[i] < 0) count++;
-    }
-    return count;
+// Довжина сторони між двома точками
+double sideLength(Point a, Point b) {
+    return sqrt((b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y));
+}
+
+// Обчислення площі трикутника за формулою Герона
+double triangleArea(Point t[3]) {
+    double a = sideLength(t[0], t[1]);
+    double b = sideLength(t[1], t[2]);
+    double c = sideLength(t[2], t[0]);
+    double p = (a + b + c) / 2;
+    return sqrt(p * (p - a) * (p - b) * (p - c));
 }
 
 // Основна програма
 int main() {
-    int n;
+    Point tri1[3], tri2[3];
 
-    printf("Введіть кількість елементів у масивах (n > 0): ");
-    while (scanf("%d", &n) != 1 || n <= 0) {
-        printf("Помилка! Введіть натуральне число n > 0: ");
-        while (getchar() != '\n');
+    inputTriangle(tri1, 1);
+    inputTriangle(tri2, 2);
+
+    printTriangle(tri1, 1);
+    printTriangle(tri2, 2);
+
+    double area1 = triangleArea(tri1);
+    double area2 = triangleArea(tri2);
+
+    printf("Площа трикутника 1: %.4lf\n", area1);
+    printf("Площа трикутника 2: %.4lf\n", area2);
+
+    if (area1 > area2) {
+        printf("Трикутник 1 має більшу площу.\n");
+    } else if (area2 > area1) {
+        printf("Трикутник 2 має більшу площу.\n");
+    } else {
+        printf("Площі трикутників рівні.\n");
     }
-
-    int a[n], b[n];
-
-    inputArray(a, n, 'a');
-    inputArray(b, n, 'b');
-
-    printArray(a, n, 'a');
-    printArray(b, n, 'b');
-
-    int negA = countNegative(a, n);
-    int negB = countNegative(b, n);
-
-    if (negA > negB)
-        printf("У масиві a більше від’ємних елементів (%d > %d)\n", negA, negB);
-    else if (negB > negA)
-        printf("У масиві b більше від’ємних елементів (%d > %d)\n", negB, negA);
-    else
-        printf("Кількість від’ємних елементів у масивах однакова (%d)\n", negA);
 
     return 0;
 }
