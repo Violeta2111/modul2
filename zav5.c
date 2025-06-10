@@ -13,7 +13,7 @@ void inputArray(double arr[], int n) {
 void printArray(double arr[], int n) {
     printf("Масив: ");
     for (int i = 0; i < n; i++) {
-        printf("%.2lf ", arr[i]);
+        printf("%.1lf ", arr[i]);
     }
     printf("\n");
 }
@@ -41,7 +41,7 @@ int main() {
     inputArray(a, n);
     printArray(a, n);
     double result = sumOfAbs(a, n);
-    printf("Сума модулів елементів: %.4lf\n", result);
+    printf("Сума модулів елементів: %.1lf\n", result);
 
     return 0;
 }

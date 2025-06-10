@@ -51,8 +51,8 @@ int main() {
     double area1 = triangleArea(tri1);
     double area2 = triangleArea(tri2);
 
-    printf("Площа трикутника 1: %.4lf\n", area1);
-    printf("Площа трикутника 2: %.4lf\n", area2);
+    printf("Площа трикутника 1: %.1lf\n", area1);
+    printf("Площа трикутника 2: %.1lf\n", area2);
 
     if (area1 > area2) {
         printf("Трикутник 1 має більшу площу.\n");
